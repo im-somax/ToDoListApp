@@ -54,27 +54,8 @@ public class MainActivity extends AppCompatActivity {
         btnAddNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, NewTaskActivity.class));
+                startActivity(new Intent(MainActivity.this, NewProject.class));
             }
         });
-        setUpRecyclerView();
-    }
-    private void setUpRecyclerView() {
-        Query query = notebookRef.orderBy("priority", Query.Direction.DESCENDING);
-        FirestoreRecyclerOptions<MyDoes> options = new FirestoreRecyclerOptions.Builder<MyDoes>()
-                .setQuery(query, MyDoes.class)
-                .build();
-    }
-    @Override
-    protected void onStart() {
-        super.onStart();
-        adapter.startListening();
-    }
-    @Override
-    protected void onStop() {
-        super.onStop();
-        adapter.stopListening();
-    }
-
     }
 }
