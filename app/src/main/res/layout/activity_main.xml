@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="198dp"
+    android:background="#000c5d"
+    android:orientation="vertical">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/titlepage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="16dp"
+                android:text="ToDo List"
+                android:textColor="@android:color/white"
+                android:textSize="28sp" />
+
+            <TextView
+                android:id="@+id/subtitlepage"
+                android:layout_marginLeft="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Finish them quickly as possibly"
+                android:textColor="#adadad"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnAddNew"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="35dp"
+            android:layout_width="52dp"
+            android:textSize="38sp"
+            android:textColor="#fff"
+            android:textAlignment="center"
+            android:text="+"
+            android:background="@drawable/bgbtnnew"
+            android:layout_height="52dp"/>
+    </LinearLayout>
+    <View
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000c5d"/>
+</LinearLayout>
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/projectList"
+    android:layout_width="match_parent"
+    android:layout_marginTop="-60dp"
+    android:layout_marginRight="16dp"
+    android:layout_marginLeft="16dp"
+    android:layout_height="wrap_content"/>
+<TextView
+    android:id="@+id/endpage"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textAlignment="center"
+    android:text="No More Project"
+    android:layout_marginTop="20dp"
+    android:textColor="#9a9a9a"
+    android:textSize="16sp"/>
+</LinearLayout>
