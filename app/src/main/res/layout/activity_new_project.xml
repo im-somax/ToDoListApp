@@ -60,7 +60,7 @@
                 android:layout_marginBottom="10dp"
                 android:text="Add Title"/>
             <EditText
-                android:id="@+id/titleDoes"
+                android:id="@+id/projectTitle"
                 android:layout_width="match_parent"
                 android:textColorHint="#b5b5b5"
                 android:paddingLeft="12dp"
@@ -88,7 +88,7 @@
                 android:layout_marginBottom="10dp"
                 android:text="Description"/>
             <EditText
-                android:id="@+id/descdoes"
+                android:id="@+id/projectDesc"
                 android:layout_width="match_parent"
                 android:textColorHint="#b5b5b5"
                 android:paddingLeft="12dp"
@@ -100,37 +100,9 @@
                 android:inputType="text"/>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="16dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/adddate"
-                android:textSize="18sp"
-                android:textColor="#000c5d"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="Due Date"/>
-            <EditText
-                android:id="@+id/datedoes"
-                android:layout_width="match_parent"
-                android:textColorHint="#b5b5b5"
-                android:paddingLeft="12dp"
-                android:textColor="#000c5d"
-                android:background="@drawable/bginputtask"
-                android:layout_height="45dp"
-                android:hint="When will you finish it?"
-                android:inputType="text"/>
-        </LinearLayout>
-
     </LinearLayout>
     <Button
-        android:id="@+id/btnSave"
+        android:id="@+id/btnSaveProject"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginTop="20dp"

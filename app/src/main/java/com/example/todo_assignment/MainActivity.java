@@ -1,6 +1,8 @@
 package com.example.todo_assignment;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,9 +12,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -23,11 +27,11 @@ public class MainActivity extends AppCompatActivity {
     TextView titlepage, subtitlepage, endpage;
     Button btnAddNew;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference notebookRef = db.collection("Notebook");
-    private DoesAdapter doesAdapter;
+    private CollectionReference projectRef = db.collection("Projects");
+    private TaskAdapter taskAdapter;
     FirebaseFirestore reference;
     RecyclerView projectList;
-    ArrayList<MyDoes> list;
+    ArrayList<Tasks> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
         titlepage = findViewById(R.id.titlepage);
         subtitlepage = findViewById(R.id.subtitlepage);
         endpage = findViewById(R.id.endpage);
-
         btnAddNew = findViewById(R.id.btnAddNew);
+        setUpRecyclerView();
 
         // import font
         Typeface MLight = Typeface.createFromAsset(getAssets(), "fonts/ML.ttf");
@@ -48,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
         titlepage.setTypeface(MMedium);
         subtitlepage.setTypeface(MLight);
         endpage.setTypeface(MLight);
-
         btnAddNew.setTypeface(MLight);
 
         btnAddNew.setOnClickListener(new View.OnClickListener() {
@@ -57,5 +60,51 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, NewProject.class));
             }
         });
+    }
+    private void setUpRecyclerView() {
+        Query query = projectRef.orderBy("priority", Query.Direction.DESCENDING);
+        FirestoreRecyclerOptions<Tasks> options = new FirestoreRecyclerOptions.Builder<Tasks>()
+                .setQuery(query, Tasks.class)
+                .build();
+        taskAdapter = new TaskAdapter(options);
+        RecyclerView recyclerView = findViewById(R.id.projectList);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(taskAdapter);
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT){
+
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                taskAdapter.deleteTask(viewHolder.getAdapterPosition());
+            }
+        }).attachToRecyclerView(recyclerView);
+
+        taskAdapter.setOnItemClickListener(new TaskAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+                Tasks tasks = documentSnapshot.toObject(Tasks.class);
+                String id = documentSnapshot.getId();
+                String path = documentSnapshot.getReference().getPath();
+                Toast.makeText(MainActivity.this,
+                        "Position: " + position + " ID: " + id, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        taskAdapter.startListening();
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        taskAdapter.stopListening();
     }
 }
