@@ -54,7 +54,7 @@ public class ProjectView extends AppCompatActivity {
         btnAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ProjectView.this, NewTaskActivity.class));
+                startActivity(new Intent(ProjectView.this, NewTask.class));
             }
         });
     }

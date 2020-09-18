@@ -22,7 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Random;
 
- public class NewTaskActivity extends AppCompatActivity {
+ public class NewTask extends AppCompatActivity {
 
     TextView titlepage,addtitle,adddesc,adddate;
     EditText tasktitle, taskdesc, taskdate;

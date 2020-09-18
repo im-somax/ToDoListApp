@@ -16,7 +16,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 
 
 public class ProjectAdapter extends FirestoreRecyclerAdapter<Projects,ProjectAdapter.ProjectHolder>{
-    private TaskAdapter.OnItemClickListener listener;
+    private ProjectAdapter.OnItemClickListener listener;
 
     public ProjectAdapter(@NonNull FirestoreRecyclerOptions options) {
         super(options);
@@ -44,10 +44,12 @@ public class ProjectAdapter extends FirestoreRecyclerAdapter<Projects,ProjectAda
     class ProjectHolder extends RecyclerView.ViewHolder{
         TextView textViewProjectTitle;
         TextView textViewProjectDescription;
+        TextView textViewPriority;
         public ProjectHolder(@NonNull View itemView) {
             super(itemView);
-            textViewProjectTitle = itemView.findViewById(R.id.titledoes);
-            textViewProjectDescription = itemView.findViewById(R.id.descdoes);
+            textViewProjectTitle = itemView.findViewById(R.id.title);
+            textViewProjectDescription = itemView.findViewById(R.id.desc);
+            textViewPriority = itemView.findViewById(R.id.date);
         }
     }
 
@@ -55,7 +57,7 @@ public class ProjectAdapter extends FirestoreRecyclerAdapter<Projects,ProjectAda
     public interface OnItemClickListener{
         void onItemClick(DocumentSnapshot documentSnapshot, int position);
     }
-    public void setOnItemClickListener(TaskAdapter.OnItemClickListener listener){
+    public void setOnItemClickListener(ProjectAdapter.OnItemClickListener listener){
         this.listener = listener;
     }
 }

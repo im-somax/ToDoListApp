@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ public class NewProject extends AppCompatActivity {
     TextView titlepage,addtitle,adddesc;
     EditText projectTitle, projectDesc;
     Button btnSaveProject, btnCancel;
+    private NumberPicker numberPickerPriority;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,17 +42,20 @@ public class NewProject extends AppCompatActivity {
         projectDesc = findViewById(R.id.projectDesc);
         btnSaveProject = findViewById(R.id.btnSaveProject);
         btnCancel = findViewById(R.id.btnCancel);
+        numberPickerPriority = findViewById(R.id.number_picker_priority);
+        numberPickerPriority.setMinValue(1);
+        numberPickerPriority.setMaxValue(10);
 
         btnSaveProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveTask();
+                saveProject();
             }
         });
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                finish();
             }
         });
 
@@ -70,9 +75,11 @@ public class NewProject extends AppCompatActivity {
         btnSaveProject.setTypeface(MMedium);
         btnCancel.setTypeface(MLight);
     }
-    private void saveTask() {
+    private void saveProject() {
         String title = projectTitle.getText().toString();
         String description = projectDesc.getText().toString();
+        int priority = numberPickerPriority.getValue();
+
         if (title.trim().isEmpty()) {
             Toast.makeText(this, "Please insert a title", Toast.LENGTH_SHORT).show();
             return;
@@ -84,7 +91,7 @@ public class NewProject extends AppCompatActivity {
         }
         CollectionReference projectRef = FirebaseFirestore.getInstance()
                 .collection("Projects");
-        projectRef.add(new Projects(title, description));
+        projectRef.add(new Projects(title, description,priority));
         Toast.makeText(this, "Project added", Toast.LENGTH_SHORT).show();
         finish();
     }

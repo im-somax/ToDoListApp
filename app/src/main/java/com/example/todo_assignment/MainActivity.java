@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnAddNew;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference projectRef = db.collection("Projects");
-    private TaskAdapter taskAdapter;
+    private ProjectAdapter projectAdapter;
     FirebaseFirestore reference;
     RecyclerView projectList;
     ArrayList<Tasks> list;
@@ -63,14 +63,14 @@ public class MainActivity extends AppCompatActivity {
     }
     private void setUpRecyclerView() {
         Query query = projectRef.orderBy("priority", Query.Direction.DESCENDING);
-        FirestoreRecyclerOptions<Tasks> options = new FirestoreRecyclerOptions.Builder<Tasks>()
-                .setQuery(query, Tasks.class)
+        FirestoreRecyclerOptions<Projects> options = new FirestoreRecyclerOptions.Builder<Projects>()
+                .setQuery(query, Projects.class)
                 .build();
-        taskAdapter = new TaskAdapter(options);
+        projectAdapter = new ProjectAdapter(options);
         RecyclerView recyclerView = findViewById(R.id.projectList);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(taskAdapter);
+        recyclerView.setAdapter(projectAdapter);
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT){
@@ -82,11 +82,11 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                taskAdapter.deleteTask(viewHolder.getAdapterPosition());
+                projectAdapter.deleteProject(viewHolder.getAdapterPosition());
             }
         }).attachToRecyclerView(recyclerView);
 
-        taskAdapter.setOnItemClickListener(new TaskAdapter.OnItemClickListener() {
+        projectAdapter.setOnItemClickListener(new TaskAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
                 Tasks tasks = documentSnapshot.toObject(Tasks.class);
@@ -100,11 +100,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        taskAdapter.startListening();
+        projectAdapter.startListening();
     }
     @Override
     protected void onStop() {
         super.onStop();
-        taskAdapter.stopListening();
+        projectAdapter.stopListening();
     }
 }
