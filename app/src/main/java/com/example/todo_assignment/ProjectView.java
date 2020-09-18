@@ -26,7 +26,7 @@ public class ProjectView extends AppCompatActivity {
     private CollectionReference projectRef = db.collection("Projects");
     TextView projectName, projectDesc, endpage;
     Button btnAddTask;
-    private ProjectAdapter projectAdapter;
+    private TaskAdapter taskAdapter;
     FirebaseFirestore reference;
     RecyclerView projectList;
     ArrayList<Tasks> list;
@@ -63,11 +63,11 @@ public class ProjectView extends AppCompatActivity {
         FirestoreRecyclerOptions<Tasks> options = new FirestoreRecyclerOptions.Builder<Tasks>()
                 .setQuery(query, Tasks.class)
                 .build();
-        projectAdapter = new ProjectAdapter(options);
+        taskAdapter = new TaskAdapter(options);
         RecyclerView recyclerView = findViewById(R.id.projectList);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(projectAdapter);
+        recyclerView.setAdapter(taskAdapter);
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT){
@@ -79,11 +79,11 @@ public class ProjectView extends AppCompatActivity {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                ProjectAdapter.deleteProject(viewHolder.getAdapterPosition());
+   //             TaskAdapter.deleteTask(viewHolder.getAdapterPosition());
             }
         }).attachToRecyclerView(recyclerView);
 
-        projectAdapter.setOnItemClickListener(new TaskAdapter.OnItemClickListener() {
+        taskAdapter.setOnItemClickListener(new TaskAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
                 Projects projects = documentSnapshot.toObject(Projects.class);
@@ -97,11 +97,11 @@ public class ProjectView extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        projectAdapter.startListening();
+        taskAdapter.startListening();
     }
     @Override
     protected void onStop() {
         super.onStop();
-        projectAdapter.stopListening();
+        taskAdapter.stopListening();
     }
 }

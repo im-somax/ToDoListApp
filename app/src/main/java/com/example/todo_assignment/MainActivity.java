@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         subtitlepage = findViewById(R.id.subtitlepage);
         endpage = findViewById(R.id.endpage);
         btnAddNew = findViewById(R.id.btnAddNew);
-        setUpRecyclerView();
 
         // import font
         Typeface MLight = Typeface.createFromAsset(getAssets(), "fonts/ML.ttf");
@@ -60,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, NewProject.class));
             }
         });
+        setUpRecyclerView();
     }
     private void setUpRecyclerView() {
         Query query = projectRef.orderBy("priority", Query.Direction.DESCENDING);
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }).attachToRecyclerView(recyclerView);
 
-        projectAdapter.setOnItemClickListener(new TaskAdapter.OnItemClickListener() {
+        projectAdapter.setOnItemClickListener(new ProjectAdapter.OnItemClickListener(){
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
                 Tasks tasks = documentSnapshot.toObject(Tasks.class);

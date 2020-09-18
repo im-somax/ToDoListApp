@@ -45,9 +45,9 @@ public class TaskAdapter extends FirestoreRecyclerAdapter<Tasks,TaskAdapter.Task
         TextView textViewTaskDate;
         public TaskHolder(@NonNull View itemView) {
             super(itemView);
-            textViewTaskTitle = itemView.findViewById(R.id.titledoes);
-            textViewTaskDescription = itemView.findViewById(R.id.descdoes);
-            textViewTaskDate = itemView.findViewById(R.id.datedoes);
+            textViewTaskTitle = itemView.findViewById(R.id.title);
+            textViewTaskDescription = itemView.findViewById(R.id.desc);
+            textViewTaskDate = itemView.findViewById(R.id.date);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

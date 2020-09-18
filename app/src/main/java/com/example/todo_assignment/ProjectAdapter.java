@@ -34,10 +34,10 @@ public class ProjectAdapter extends FirestoreRecyclerAdapter<Projects,ProjectAda
     protected void onBindViewHolder(@NonNull ProjectHolder holder, int position, @NonNull Projects model) {
         holder.textViewProjectTitle.setText(model.getTitle());
         holder.textViewProjectDescription.setText(model.getDescription());
+        holder.textViewPriority.setText(model.getPriority());
     }
     public void deleteProject(int position){
         getSnapshots().getSnapshot(position).getReference().delete();
-
     }
 
 
